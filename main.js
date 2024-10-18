@@ -1,18 +1,24 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const courseRoutes = require('./routes/courses');
 
-mongoose.connect('mongodb://localhost:27017/test1-sep-2024')
-.then(() => {
-    
-    const PORT = 3000;
-    const app = express();
-    app.use(express.json());
+const app = express();
 
-    const indexRoute = require('./routes/index.route');
-    app.use('/api', indexRoute);
 
-    app.listen(3000, () => console.log('Application listening on http://localhost:' + PORT));
+app.use(express.json());
+
+mongoose.connect('mongodb://localhost:27017/gestionCours', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 })
-.catch(err => {
-    console.error(err)
+.then(() => console.log('MongoDB connecté'))
+.catch((err) => console.log(err));
+
+
+app.use('/api/courses', courseRoutes);
+
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Serveur en cours d'exécution sur le port ${PORT}`);
 });

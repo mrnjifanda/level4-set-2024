@@ -1,0 +1,25 @@
+RELATIONS:
+
+
+
+Voici une explication plus détaillée des relations entre les différentes entités dans la base de données:
+
+1. Relation entre "Cours" et "Enseignants"
+Type de relation : Relation plusieurs-à-plusieurs.
+Explication : Un cours peut être enseigné par plusieurs enseignants (ex : un cours de gestion de projet pourrait être co-enseigné par deux formateurs spécialisés). De même, un enseignant peut donner plusieurs cours.
+
+2. Relation entre "Cours" et "Étudiants" (via "Inscriptions")
+Type de relation : Relation plusieurs-à-plusieurs.
+Explication : Un étudiant peut s'inscrire à plusieurs cours, et chaque cours peut accueillir plusieurs étudiants. La table "Inscriptions" servira d’intermédiaire pour cette relation.
+
+3. Relation entre "Cours" et "Horaires"
+Type de relation : Relation un-à-plusieurs.
+Explication : Un cours peut avoir plusieurs horaires répartis dans le temps (ex : un cours de deux semaines peut être enseigné à des jours et heures différentes). Chaque horaire appartient donc à un cours spécifique.
+
+4. Relation entre "Horaires" et "Salles de classe"
+Type de relation : Relation un-à-un ou un-à-plusieurs, selon la complexité du centre.
+Explication : Chaque horaire est associé à une salle de classe. Un horaire donné se déroule dans une salle précise à un moment donné. Une salle peut accueillir plusieurs horaires mais à des moments distincts.
+
+5. Relation entre "Étudiants" et "Inscriptions"
+Type de relation : Relation un-à-plusieurs.
+Explication : Un étudiant peut avoir plusieurs inscriptions à différents cours, mais chaque inscription est unique pour un cours donné. Cela permet de suivre l'historique des cours suivis par l'étudiant.
