@@ -54,5 +54,12 @@ The main objective is to develop a web application that facilitates the manageme
 2. Draw an ERD showing the relationships between these entities.
 3. Make sure to include the appropriate primary and foreign keys for each entity.
 
-### Part 2: Developing endpoints for the following features:
+### Part 2: Creation of models
 
+- Create all the models representing the entities of your ERD
+
+### Part 3: Developing endpoints for the following features
+
+- Implement endpoints to add, edit, and delete courses.
+- Make sure courses can be associated with categories.
+- Add the ability to manage schedules and classrooms for each course.
