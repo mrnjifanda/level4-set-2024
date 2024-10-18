@@ -6,7 +6,7 @@ const Enrollment = require('../models/Enrollment');
 const Student = require('../models/Student');
 const Course = require('../models/Course');
 
-exports.addStudentToCourse = async (req, res) => {
+module.exports.addStudentToCourse = async (req, res) => {
 
     const { studentId, courseId } = req.body;
     try {
@@ -14,7 +14,7 @@ exports.addStudentToCourse = async (req, res) => {
         const course = await Course.findById(courseId);
 
         if (!student || !course) {
-            return res.status(404).json({ error: 'Student or Course not found' });
+            return res.status(404).json({ error: 'Student or Course not found.' });
         }
 
         const enrollment = new Enrollment({ studentId, courseId });
@@ -24,6 +24,3 @@ exports.addStudentToCourse = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 };
-
-
-// module.exports = addStudentToCourse;

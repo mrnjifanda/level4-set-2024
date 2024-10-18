@@ -5,7 +5,7 @@ const router = express.Router();
 
 const Schedule = require('../models/Schedule');
 
-exports.addSchedule = async (req, res) => {
+module.exports.addSchedule = async (req, res) => {
     const { startTime, endTime, classroom } = req.body;
     try {
         const schedule = new Schedule({ courseId: req.params.courseId, startTime, endTime, classroom });
@@ -15,5 +15,3 @@ exports.addSchedule = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 };
-
-module.exports = router;

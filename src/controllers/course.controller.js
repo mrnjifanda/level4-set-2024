@@ -1,5 +1,17 @@
 const Course = require('../models/Course');
 
+const courses = async ( req , res ) => {
+    try {
+        const course = await Course.find()
+        res.json(course)
+    } catch (error) {
+        res.json({
+            eror: true,
+            message:'could not retrieve user'
+        })
+    }
+}
+
 const addCourse = async (req, res) => {
     const { name, description, category, duration, instructorId } = req.body;
     try {
@@ -38,4 +50,4 @@ const deleteCourse = async (req, res) => {
 
 
 
-module.exports = router;
+module.exports = { courses , addCourse , editCourse , deleteCourse };
