@@ -1,0 +1,39 @@
+1. Entites et attribus:
+    a- Cours:
+        - id_cours (PK)
+        - Details du Cours
+        - categorie du Cours
+        - Duree du Cours
+    
+    b- Etudiants :
+        - id_etudiant (PK)
+        - Nom
+        - Age
+        - sex 
+        - Numero de tel
+
+    c- Instructeurs :
+        - id_instructeur (PK)
+        - Nom de l'instructeur 
+        - Numero de tel 
+        - Cours enseigne (FK)
+
+    d- Inscriptions :
+        - id_inscriptions (PK)
+        - Non de l'etudiant (FK)
+        - Cours choisi (FK)
+
+    e- Horaires :
+        - id_horaire (PK)
+        - Session du cours (FK)
+
+
+2. Differentes relations
+    a. Entre l'etudiant et le cours (1-N) :
+        Un etudiant peut choisir de participer a plusieurs cours.
+
+    b. Entre l'instructeur et le cours (1-N) :
+        Un instructeur peut donner plusieurs cours.
+
+    c. Entre l'etudiant et l'inscription (1-1) :
+        Une inscription est individuelle a chaque eleve.
