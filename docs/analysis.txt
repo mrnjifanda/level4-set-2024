@@ -1,0 +1,192 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+USE `mydb` ;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`student`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`student` (
+  `idstudent` INT NOT NULL,
+  `first_name` VARCHAR(45) NOT NULL,
+  `last_name` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `course_history` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idstudent`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`instructor`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`instructor` (
+  `idinstructor` INT NOT NULL,
+  `phone` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NULL,
+  `courses_taught` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`idinstructor`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`course`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`course` (
+  `idcourse` INT NOT NULL,
+  `course_title` VARCHAR(45) NULL,
+  `coursescol` VARCHAR(45) NOT NULL,
+  `category` VARCHAR(45) NOT NULL,
+  `duration` VARCHAR(45) NOT NULL,
+  `student_idstudent` INT NOT NULL,
+  `instructor_idinstructor` INT NOT NULL,
+  PRIMARY KEY (`idcourse`, `student_idstudent`, `instructor_idinstructor`),
+  INDEX `fk_courses_student_idx` (`student_idstudent` ASC) VISIBLE,
+  INDEX `fk_courses_instructor1_idx` (`instructor_idinstructor` ASC) VISIBLE,
+  CONSTRAINT `fk_courses_student`
+    FOREIGN KEY (`student_idstudent`)
+    REFERENCES `mydb`.`student` (`idstudent`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_courses_instructor1`
+    FOREIGN KEY (`instructor_idinstructor`)
+    REFERENCES `mydb`.`instructor` (`idinstructor`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`schedule`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`schedule` (
+  `idschedule` INT NOT NULL,
+  `course_date` VARCHAR(45) NOT NULL,
+  `start_time` VARCHAR(45) NOT NULL,
+  `end_time` VARCHAR(45) NOT NULL,
+  `course_idcourse` INT NOT NULL,
+  `course_student_idstudent` INT NOT NULL,
+  `course_instructor_idinstructor` INT NOT NULL,
+  PRIMARY KEY (`idschedule`, `course_idcourse`, `course_student_idstudent`, `course_instructor_idinstructor`),
+  INDEX `fk_schedule_course1_idx` (`course_idcourse` ASC, `course_student_idstudent` ASC, `course_instructor_idinstructor` ASC) VISIBLE,
+  CONSTRAINT `fk_schedule_course1`
+    FOREIGN KEY (`course_idcourse` , `course_student_idstudent` , `course_instructor_idinstructor`)
+    REFERENCES `mydb`.`course` (`idcourse` , `student_idstudent` , `instructor_idinstructor`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`enrollment`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`enrollment` (
+  `idenrollment` INT NOT NULL,
+  `course_idcourse` INT NOT NULL,
+  `course_student_idstudent` INT NOT NULL,
+  `course_instructor_idinstructor` INT NOT NULL,
+  `student_idstudent` INT NOT NULL,
+  `instructor_idinstructor` INT NOT NULL,
+  PRIMARY KEY (`idenrollment`, `course_idcourse`, `course_student_idstudent`, `course_instructor_idinstructor`, `student_idstudent`, `instructor_idinstructor`),
+  INDEX `fk_enrollment_course1_idx` (`course_idcourse` ASC, `course_student_idstudent` ASC, `course_instructor_idinstructor` ASC) VISIBLE,
+  INDEX `fk_enrollment_student1_idx` (`student_idstudent` ASC) VISIBLE,
+  INDEX `fk_enrollment_instructor1_idx` (`instructor_idinstructor` ASC) VISIBLE,
+  CONSTRAINT `fk_enrollment_course1`
+    FOREIGN KEY (`course_idcourse` , `course_student_idstudent` , `course_instructor_idinstructor`)
+    REFERENCES `mydb`.`course` (`idcourse` , `student_idstudent` , `instructor_idinstructor`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_enrollment_student1`
+    FOREIGN KEY (`student_idstudent`)
+    REFERENCES `mydb`.`student` (`idstudent`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_enrollment_instructor1`
+    FOREIGN KEY (`instructor_idinstructor`)
+    REFERENCES `mydb`.`instructor` (`idinstructor`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`classroom`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`classroom` (
+  `idclassroom` INT NOT NULL,
+  `course_idcourse` INT NOT NULL,
+  `course_student_idstudent` INT NOT NULL,
+  `course_instructor_idinstructor` INT NOT NULL,
+  PRIMARY KEY (`idclassroom`, `course_idcourse`, `course_student_idstudent`, `course_instructor_idinstructor`),
+  INDEX `fk_classroom_course1_idx` (`course_idcourse` ASC, `course_student_idstudent` ASC, `course_instructor_idinstructor` ASC) VISIBLE,
+  CONSTRAINT `fk_classroom_course1`
+    FOREIGN KEY (`course_idcourse` , `course_student_idstudent` , `course_instructor_idinstructor`)
+    REFERENCES `mydb`.`course` (`idcourse` , `student_idstudent` , `instructor_idinstructor`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`attendance`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`attendance` (
+  `idattendance` INT NOT NULL,
+  `course_idcourse` INT NOT NULL,
+  `course_student_idstudent` INT NOT NULL,
+  `course_instructor_idinstructor` INT NOT NULL,
+  `student_idstudent` INT NOT NULL,
+  PRIMARY KEY (`idattendance`, `course_idcourse`, `course_student_idstudent`, `course_instructor_idinstructor`, `student_idstudent`),
+  INDEX `fk_attendance_course1_idx` (`course_idcourse` ASC, `course_student_idstudent` ASC, `course_instructor_idinstructor` ASC) VISIBLE,
+  INDEX `fk_attendance_student1_idx` (`student_idstudent` ASC) VISIBLE,
+  CONSTRAINT `fk_attendance_course1`
+    FOREIGN KEY (`course_idcourse` , `course_student_idstudent` , `course_instructor_idinstructor`)
+    REFERENCES `mydb`.`course` (`idcourse` , `student_idstudent` , `instructor_idinstructor`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_attendance_student1`
+    FOREIGN KEY (`student_idstudent`)
+    REFERENCES `mydb`.`student` (`idstudent`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`course_history`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`course_history` (
+  `idcourse_history` INT NOT NULL,
+  `course_idcourse` INT NOT NULL,
+  `course_student_idstudent` INT NOT NULL,
+  `course_instructor_idinstructor` INT NOT NULL,
+  `student_idstudent` INT NOT NULL,
+  PRIMARY KEY (`idcourse_history`, `course_idcourse`, `course_student_idstudent`, `course_instructor_idinstructor`, `student_idstudent`),
+  INDEX `fk_course_history_course1_idx` (`course_idcourse` ASC, `course_student_idstudent` ASC, `course_instructor_idinstructor` ASC) VISIBLE,
+  INDEX `fk_course_history_student1_idx` (`student_idstudent` ASC) VISIBLE,
+  CONSTRAINT `fk_course_history_course1`
+    FOREIGN KEY (`course_idcourse` , `course_student_idstudent` , `course_instructor_idinstructor`)
+    REFERENCES `mydb`.`course` (`idcourse` , `student_idstudent` , `instructor_idinstructor`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_course_history_student1`
+    FOREIGN KEY (`student_idstudent`)
+    REFERENCES `mydb`.`student` (`idstudent`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
