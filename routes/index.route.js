@@ -3,6 +3,7 @@ const router = express.Router();
 const Course = require('../models/Course');
 
 
+
 router.get('/', async (req, res) => {
   try {
     const courses = await Course.find();
