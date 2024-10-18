@@ -1,0 +1,60 @@
+
+Courses {
+    id PRIMARY KEY,
+    name,
+    category,
+    duration,
+    classroom
+}
+
+Students {
+    id PRIMARY KEY,
+    name,
+    email,
+    enrollmentDate
+}
+
+Instructors {
+    id PRIMARY KEY,
+    name,
+    email,
+    bio
+}
+
+Enrollments {
+    id PRIMARY KEY,
+    studentId,
+    courseId,
+    grade,
+    FOREIGN KEY (studentId) REFERENCES Students(id),
+    FOREIGN KEY (courseId) REFERENCES Courses(id)
+}
+
+Schedules {
+    id PRIMARY KEY,
+    courseId,
+    time,
+    FOREIGN KEY (courseId) REFERENCES Courses(id)
+}
+
+CourseInstructor {
+    id PRIMARY KEY,
+    instructorId,
+    courseId,
+    FOREIGN KEY (instructorId) REFERENCES Instructors(id),
+    FOREIGN KEY (courseId) REFERENCES Courses(id)
+}
+
+Relationships
+
+1. Students TO Courses (refrence to Enrollments)=
+    Relationship = Many-to-Many
+   Explanation = A student can enroll in multiple courses, and each course can have multiple students
+
+2. Courses TO Instructors (refrence to CourseInstructor)
+  Relationship = Many-to-Many
+  Explanation = A course can be taught by multiple instructors, and an instructor can teach multiple courses.
+
+3. Courses TO Schedules
+  Relationship = One-to-Many
+  Explanation = Each course can have multiple scheduled sessions, but each schedule entry is tied to only one course. 
