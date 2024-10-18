@@ -1,0 +1,58 @@
+Courses:
+
+    Course ID (Primary Key)
+    Name
+    Description
+    Category (Foreign Key to Category entity)
+    Duration
+
+
+Students:
+
+
+    Student ID (Primary Key)
+    First Name
+    Last Name
+    Email
+    Date of Birth
+    Course History (Foreign Key to Enrollments entity)
+
+
+
+Instructors:
+
+
+    Instructor ID (Primary Key)
+    First Name
+    Last Name
+    Email
+    Contact Number
+    Courses Taught (Foreign Key to Courses)
+
+
+
+Enrollments:
+
+    Enrollment ID (Primary Key)
+    Student ID (Foreign Key to Students)
+    Course ID (Foreign Key to Courses)
+    Enrollment Date
+
+
+
+Schedules:
+
+    Schedule ID (Primary Key)
+    Course ID (Foreign Key to Courses)
+    Instructor ID (Foreign Key to Instructors)
+    Classroom
+    Date
+    Start Time
+    End Time
+
+
+Categories:
+
+    Category ID (Primary Key)
+    Name
+    Description
