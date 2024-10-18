@@ -1,6 +1,5 @@
 // Controller (controllers/scheduleController.js)
 const express = require('express');
-const router = express.Router();
 
 
 const Schedule = require('../models/Schedule');

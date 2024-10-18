@@ -1,6 +1,6 @@
 const Course = require('../models/Course');
 
-const courses = async ( req , res ) => {
+const getCourses = async ( req , res ) => {
     try {
         const course = await Course.find()
         res.json(course)
@@ -50,4 +50,4 @@ const deleteCourse = async (req, res) => {
 
 
 
-module.exports = { courses , addCourse , editCourse , deleteCourse };
+module.exports = { getCourses , addCourse , editCourse , deleteCourse };
