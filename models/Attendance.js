@@ -6,15 +6,25 @@ const attendaceSchema = new Schema({
         type:String,
         required:true
     },
-    duration:{
-        type:Date(),
-        required:true
-    },
-    category:{
-        type:String,
-        required:true
-    },
+    student:[
+        {
+            courseId:{
+                type:Schema.Types.ObjectId,
+                ref:"Student",
+                required:true
+            }
+        }
+    ],
+    course:[
+        {
+            courseId:{
+                type:Schema.Types.ObjectId,
+                ref:"Course",
+                required:true
+            }
+        }
+    ],
 },
 {timeStamps:true}
 )
-module.exports = mongoose.model('Student', coursSchema);
+module.exports = mongoose.model('Attendance', attendanceSchema);
