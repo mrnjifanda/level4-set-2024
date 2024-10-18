@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose
 
-const studentSchema = new Schema({
+const courseSchema = new Schema({
     course_title:{
         type:String,
         required:true
@@ -13,4 +13,4 @@ const studentSchema = new Schema({
 },
 {timeStamps:true}
 )
-module.exports = mongoose.model('Student', userSchema);
+module.exports = mongoose.model('Student', courseSchema);
