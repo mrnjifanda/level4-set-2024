@@ -23,7 +23,7 @@ const createOne = async (req, res) => {
     }
 }
 const updateOne = async (req, res) => {
-    try {
+    try { 
         const course = await Course.findByIdAndUpdate(req.params.id, req.body)
         if (!course) return res.status(404).send('Course not found.')
         res.send(course)

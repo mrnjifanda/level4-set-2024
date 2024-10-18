@@ -7,8 +7,8 @@ const indexMiddleware = require('../src/middlewares/index.middleware.js');
 // Add your routes here
 
 router.get('/', indexMiddleware, indexController.getCourse);
-router.post('/create', indexMiddleware, indexController.createOne);
+router.post('/create', indexMiddleware.create, indexController.createOne);
 router.delete('/delete/:id', indexMiddleware, indexController.deleteOne);
-router.put('/update/:id', indexMiddleware, indexController.updateOne);
+router.put('/update/:id', indexMiddleware.create, indexController.updateOne);
 
 module.exports = router;
