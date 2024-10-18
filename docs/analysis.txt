@@ -45,7 +45,7 @@ CourseInstructor {
     FOREIGN KEY (courseId) REFERENCES Courses(id)
 }
 
-Relationships=
+Relationships
 
 1. Students TO Courses (refrence to Enrollments)=
     Relationship = Many-to-Many
