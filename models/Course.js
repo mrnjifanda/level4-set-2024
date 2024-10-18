@@ -9,7 +9,11 @@ const courseSchema = new Schema({
     duration:{
         type:Date(),
         required:true
-    }
+    },
+    category:{
+        type:String,
+        required:true
+    },
 },
 {timeStamps:true}
 )
